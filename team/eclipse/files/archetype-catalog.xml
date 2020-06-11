@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-catalog xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-catalog/1.0.0 http://maven.apache.org/xsd/archetype-catalog-1.0.0.xsd"
+    xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-catalog/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <archetypes>
+    <archetype>
+      <groupId>com.macroview.midas</groupId>
+      <artifactId>wifi-authen-archetype-archetype</artifactId>
+      <version>2.5</version>
+      <description>wifi-authen-archetype-archetype</description>
+    </archetype>
+    <archetype>
+      <groupId>com.macroview.archetype</groupId>
+      <artifactId>mwf-archetype</artifactId>
+      <version>2.8.0</version>
+      <description>Archetype - mwf-archetype</description>
+    </archetype>
+  </archetypes>
+</archetype-catalog>

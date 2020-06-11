@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>团队开发框架开发提高篇.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h2 id="1-%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%BB%84%E7%BB%87">1. 开发框架组织</h2>
+<p><img src="./images/Macroview_lib.png" alt="组织图"></p>
+<h2 id="2-mwf-%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%EF%BC%88%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%89">2. MWF 的启动流程（生命周期）</h2>
+<ul>
+<li>v2.8.0</li>
+</ul>
+<p><img src="./team/images/mwf_liftcircle.png" alt="生命周期"></p>
+<p>在整个生命周期中，我们可以通过不同手段来参与流程。</p>
+<h3 id="21-%E5%AE%9E%E7%8E%B0-applicationlistener-%E6%8E%A5%E5%8F%A3%EF%BC%8C%E5%BE%97%E5%88%B0%E5%AE%B9%E5%99%A8%E5%AF%B9%E8%B1%A1">2.1 实现 ApplicationListener 接口，得到容器对象</h3>
+<ul>
+<li>
+<p>MWF 在加载所有指定包前缀的类后，就会自动执行接口 <code>ApplicationListener</code>的实现类</p>
+</li>
+<li>
+<p>注意：</p>
+<ul>
+<li>这个时候 Macroview-web-framework 还没有启动，所以无法得到 action 配置信息</li>
+<li>这个时候 Macroview-db 还没有启动，所以无法与数据库建立连接</li>
+</ul>
+</li>
+</ul>
+<h3 id="22-%E5%AE%9E%E7%8E%B0-scanbean-%E6%8E%A5%E5%8F%A3%EF%BC%8C%E5%A4%84%E7%90%86%E6%B3%A8%E8%A7%A3%E6%88%96%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0">2.2 实现 ScanBean 接口，处理注解或接口实现</h3>
+<ul>
+<li>
+<p>ScanBean 能遍历所有容器中的类</p>
+</li>
+<li>
+<p>当我们需要处理自定义注解或接口时，实现 ScanBean 接口是最好的选择</p>
+</li>
+</ul>
+<h4 id="221-scanbean-%E6%8E%A5%E5%8F%A3">2.2.1 ScanBean 接口</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ScanBean</span> </span>{
+
+	<span class="hljs-comment">/**
+	 * 遍历每个 Bean
+	 *
+	 * <span class="hljs-doctag">@param</span> bean
+	 */</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doWith</span><span class="hljs-params">(BeanInfo bean)</span></span>;
+}
+</div></code></pre>
+<p>接口只有一个方法，就是对传入的类（bean）进行处理。例如 <code>Macroview-Web-Framrwork</code> 会看看这个类是否定义 <code>@Controller</code>等注解。</p>
+<h4 id="222-beaninfo-%E5%B0%81%E8%A3%85%E4%BA%86%E7%B1%BB%E7%9A%84%E4%BF%A1%E6%81%AF%E5%92%8C%E6%93%8D%E4%BD%9C">2.2.2 BeanInfo 封装了类的信息和操作</h4>
+<p><code>BeanInfo</code> 类是对 <code>Class</code> 的一个再包装，并提供了非常多的有用的操作：</p>
+<ul>
+<li><strong>Class&lt;?&gt; getBeanClass()</strong> 获得所包装的类对象</li>
+</ul>
+<p>要知道 <code>BeanInfo</code> 所包装的是什么类，使用 <code>getBeanClass()</code>方法就得到。</p>
+<ul>
+<li>判断类是否定义了某注解：<strong>boolean beanIsAnnotationPresent(Class&lt;? extends Annotation&gt; clazz)</strong></li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * 判断类是否添加了 <span class="hljs-doctag">@Entity</span> 注解
+ */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doWith</span><span class="hljs-params">(BeanInfo bean)</span></span>{
+      <span class="hljs-keyword">if</span>(bean.beanIsAnnotationPresent(Entity.class)){
+          <span class="hljs-comment">//定义了 @Entity ，表示此类为（MD）实体类，就对此类进行处理，例如映射的数据表名，对应字段等</span>
+          <span class="hljs-comment">//...</span>
+      }
+  }
+</div></code></pre>
+<ul>
+<li>判断类是否继承或实现了某接口或某类：<strong>boolean beanIsImplements(Class&lt;?&gt; clazz)</strong></li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * 判断类是否实现了 Processor 接口
+ */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doWith</span><span class="hljs-params">(BeanInfo bean)</span></span>{
+      <span class="hljs-keyword">if</span>(bean.beanIsImplements(Processor.class)){
+          <span class="hljs-comment">//说明这个类是一个 Processor （处理器），下面就对这个类进行处理</span>
+          <span class="hljs-comment">//...</span>
+      }
+  }
+</div></code></pre>
+<ul>
+<li>判断是否继承或实现了某接口或某类，并且能实例化：<strong>boolean canInstanceAndImplements(Class&lt;?&gt; clazz)</strong>
+　　本方法与 <code>beanIsImplements(Class&lt;?&gt; clazz)</code> 区别在于，<code>beanIsImplements(Class&lt;?&gt; clazz)</code>并不保证 bean 能否实例化，换言之，bean 可能会是一个抽象类或子接口，这时 bean 是不能实例化的。</li>
+</ul>
+<p><code>canInstanceAndImplements(Class&lt;?&gt; clazz)</code>能保证这个 bean 能够实例化，所以如果需要实例化 bean 时，通常使用本方法会有保证。（抽象类或接口在实例化时，会抛出异常）</p>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * 判断类是否实现了 Processor 接口
+ */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doWith</span><span class="hljs-params">(BeanInfo bean)</span></span>{
+      <span class="hljs-keyword">if</span>(bean.canInstanceAndImplements(Processor.class)){
+          <span class="hljs-comment">//说明这个类是一个 Processor （处理器），下面就对这个类进行处理</span>
+          <span class="hljs-comment">//甚至在这里可以创建 Processor 实例</span>
+      }
+  }
+</div></code></pre>
+<ul>
+<li>
+<p>判断 Bean 能否实例化：<strong>boolean canInstance()</strong></p>
+</li>
+<li>
+<p>判断 Bean 是单例还多实例：<strong>boolean isSingleton()</strong></p>
+</li>
+</ul>
+<p>对于无状态对象而言，通常都是以单实例存在，单实例的优点在于节省空间和提高性能。而多实例往往也意味着有状态。
+　　例如，我们的 <code>Web Action</code>对象，就是单实例对象，而数据实体类（如 User），往往是多实例（每个 User 对象都对应不同的实体）。
+　　可以使用注解 <code>@Singleton</code> 明确表示单实例类。（这个注解是官方标准注解）</p>
+<ul>
+<li>实例化 Bean：<strong>Object getInstance()</strong></li>
+</ul>
+<p>这个方法会判断，如果是单实例 Bean 并且已经创建了实例时，会直接返回已有实例（复用），如果未创建实例，又或者是多实例类，会创建此 Bean 的实例并返回。</p>
+<ul>
+<li>获取 Bean 上定义的注解：<strong>A getAnnotation(Class clazz)</strong></li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * 判断类是否添加了 <span class="hljs-doctag">@Entity</span> 注解
+ */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doWith</span><span class="hljs-params">(BeanInfo bean)</span></span>{
+      <span class="hljs-keyword">if</span>(bean.beanIsAnnotationPresent(Entity.class)){
+          <span class="hljs-comment">//定义了 @Entity ，表示此类为（MD）实体类，就对此类进行处理，例如映射的数据表名，对应字段等</span>
+          
+          Entity entity = bean.getAnnotation(Entity.class); <span class="hljs-comment">//获得注解</span>
+      }
+  }
+</div></code></pre>
+<ul>
+<li>获取 Bean 的名称：<strong>String getBeanName()</strong></li>
+</ul>
+<p>Bean 的名称通常唯一，并且命名规则如下：</p>
+<pre><code> * 如果 Bean 上定义了注解 @Named，并且注解使用 value 给出名称，Bean 名称就是 value 的值
+ * 否则取 class.getSimpleName() 为 Bean 名
+</code></pre>
+<p>由于 Bean 名并非唯一，所以大家要留意。</p>
+<h3 id="23-%E4%BE%A6%E5%90%AC-scanbeancompletedevent-%E4%BA%8B%E4%BB%B6%EF%BC%8C%E7%9F%A5%E9%81%93-container-%E6%89%AB%E6%8F%8F%E7%BB%93%E6%9D%9F">2.3 侦听 ScanBeanCompletedEvent 事件，知道 Container 扫描结束</h3>
+<p>在这种情况下表示，<code>Web Framework</code> 已经分析了所有 <code>Web Action</code>；<code>MDB</code> 已经分析了所有实体类，并创建了数据源（连接池），所以在这种情况下，可以使用数据连接来存取数据。</p>
+<h3 id="24-log4j-%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96">2.4 log4j 的初始化</h3>
+<p>自动加载下述位置的，文件名为 <code>log4j.properties</code> 的配置：（找到能用的配置就停止）</p>
+<ul>
+<li>
+<p><strong>WEB-INF\data\log4j.properties</strong></p>
+</li>
+<li>
+<p><strong>WEB-INF\classes\log4j.properties</strong></p>
+</li>
+</ul>
+<p>使用配置来初始化 log4j</p>
+<h3 id="25-%E4%BE%A6%E5%90%AC-servletinitevent-%E6%9D%A5%E5%81%9A%E5%BA%94%E7%94%A8%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96">2.5 侦听 ServletInitEvent 来做应用的初始化</h3>
+<p>虽然我们可以通过侦听 <code>ScanBeanCompletedEvent</code> 来做系统的初始化（例如 启动线程，预加载数据等），但此时还没有 lo4j 的配置，所以无法输出到日志。</p>
+<p>所以，应用系统的初始化，通常会在 <code>ServletInitEvent</code> 事件侦听器中进行。</p>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * 系统模块的初始化与销毁
+ *
+ * <span class="hljs-doctag">@author</span> Jai
+ * <span class="hljs-doctag">@since</span>: v1.0
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SystemModuleInitAndDestroy</span> </span>{
+
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> Logger logger = Logger.getLogger(SystemModuleInitAndDestroy.class);
+	
+	<span class="hljs-comment">/**
+	 * 侦听 ServletInitEvent 事件，进行模块初始化
+	 *
+	 * <span class="hljs-doctag">@param</span> event
+	 */</span>
+	<span class="hljs-meta">@Observes</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">moduleInit</span><span class="hljs-params">(ServletInitEvent event)</span></span>{
+		
+		GlobalConfig.setOpenDirectToJsp(<span class="hljs-keyword">true</span>); <span class="hljs-comment">//直接加载 jsp</span>
+		GlobalConfig.setRemoveSuffix(<span class="hljs-keyword">false</span>);
+		
+		logger.info(<span class="hljs-string">"[系统初始化]==&gt; 开始加载 Radius Server DICT Files..."</span>);
+		RadiusDictionaryInit.loadDict();
+		logger.info(<span class="hljs-string">"[系统初始化]==&gt; 完成加载 Radius Server DICT Files..."</span>);
+		
+		MidasRadiusClientCacheManager.initRadiusClientCache();
+		
+		logger.info(<span class="hljs-string">"[系统初始化]==&gt; 开始启动 Radius Server..."</span>);
+		MidasRadiusServerFactory.startSyncServer();
+		logger.info(<span class="hljs-string">"[系统初始化]==&gt; 启动 Radius Server...完成"</span>);
+		
+		RadiusSessionSaveQueue.startQueue();
+		logger.info(<span class="hljs-string">"[系统初始化]==&gt; 启动 Radius Session 队列...完成"</span>);
+	}
+    <span class="hljs-comment">//...</span>
+}
+</div></code></pre>
+<h3 id="26-%E4%BE%A6%E5%90%AC-servletdestroyevent-%E6%9D%A5%E9%87%8A%E6%94%BE%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90">2.6 侦听 ServletDestroyEvent 来释放系统资源</h3>
+<p>当应用系统关闭（退出或重启）时，需要对所使用的资源进行关闭（如网络连接）、释放（如任务池），此时可以通过侦听 <code>ServletDestroyEvent</code>事件进行。</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SystemModuleInitAndDestroy</span> </span>{
+
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> Logger logger = Logger.getLogger(SystemModuleInitAndDestroy.class);
+		
+	<span class="hljs-comment">/**
+	 * 侦听 ServletDestroyEvent 来做释放资源操作
+	 *
+	 * <span class="hljs-doctag">@param</span> event
+	 */</span>
+	<span class="hljs-meta">@Observes</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">moduleDestroy</span><span class="hljs-params">(ServletDestroyEvent event)</span></span>{
+		logger.info(<span class="hljs-string">"[停止任务]==&gt; 开始停止..."</span>);
+		logger.info(<span class="hljs-string">"[停止任务]==&gt; 开始停止 Radius Server..."</span>);
+		MidasRadiusServerFactory.stopServer();
+
+		logger.info(<span class="hljs-string">"[停止任务]==&gt; 停止 Radius Server...完成"</span>);		
+		RadiusSessionSaveQueue.stopQueue();
+	}	
+}
+</div></code></pre>
+<h2 id="3-macroview-container-%E5%AE%B9%E5%99%A8">3. Macroview-Container 容器</h2>
+<p>容器存放着系统所使用的所有类及其信息，还有就是提供一些基础工具。</p>
+<h3 id="31-%E7%AE%80%E5%8D%95%E7%9A%84-ioc-%E5%8A%9F%E8%83%BD">3.1 简单的 IOC 功能</h3>
+<p>目前 <code>MC</code> 只支持简单的 bean 定义与依赖：（Java 标准注解）</p>
+<ul>
+<li>@Named：声明一个 Bean （用于注入）</li>
+<li>@Resource：引入一个依赖（指向 Bean）</li>
+</ul>
+<p>定义 Bean 示例：（示例类就能够注入到 LoginAuthenService 接口属性）</p>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * 这是标准 Account 管理模块的登录服务，当项目使用了本模块，&lt;br&gt;
+ * 并且又没有提供登录接口 LoginAuthenService 实现时，就使用本服务作为一个实现
+ *
+ * <span class="hljs-doctag">@author</span> Jai
+ * <span class="hljs-doctag">@since</span>: v1.0
+ */</span>
+<span class="hljs-meta">@Named</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AccountLoginAuthenService</span>  <span class="hljs-keyword">implements</span> <span class="hljs-title">LoginAuthenService</span></span>{
+
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> Logger logger = Logger.getLogger(AccountLoginAuthenService.class);
+	
+	<span class="hljs-comment">/**
+	 * 实现登录逻辑
+	 *
+	 * <span class="hljs-doctag">@param</span> loginBean
+	 * <span class="hljs-doctag">@return</span>
+	 * 
+	 */</span>
+	<span class="hljs-meta">@Override</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> LoginAuthenResult <span class="hljs-title">signInFlow</span><span class="hljs-params">(LoginSubmit submit)</span> </span>{
+        <span class="hljs-comment">//....</span>
+    }
+}
+</div></code></pre>
+<p>有了上面所定义的 bean ，我们就可以在其他地方通过 @Resource 来注入。</p>
+<pre class="hljs"><code><div><span class="hljs-meta">@Named</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StandardLoginAuthenService</span> </span>{
+
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> Logger logger = Logger.getLogger(StandardLoginAuthenService.class);
+	
+    <span class="hljs-comment">/**
+     * 自动注入 登录认证服务
+     */</span>
+	<span class="hljs-meta">@Resource</span>
+	<span class="hljs-keyword">private</span> LoginAuthenService loginAuthenService;
+
+    <span class="hljs-comment">//...</span>
+}
+</div></code></pre>
+<h3 id="32-%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF">3.2 简单的事件总线</h3>
+<p><code>MC</code>提供了一个简单和够用的事件发送小系统。</p>
+<p>事件驱动编程本身就是一种广泛使用的编程方式，这种编程方式的最大特点就是发送者与接受者，得到最大程度的“解耦”。发送者又可称为“生产者”，而接受者又可称为“消费者”。</p>
+<p>所以，事件系统又是一个典型的 “生产者-消费者”模式。</p>
+<h4 id="321-%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF">3.2.1 事件总线使用场景</h4>
+<p>事件总线的使用场景是比较广泛的，当然作为一个小型的事件系统，通常使用的场景：</p>
+<ul>
+<li>比较复杂的处理流程中，需要向外部传递处理状态（如 中间数据、处理阶段属性等）</li>
+<li>“生产者-消费者” 模式应用，例如完成登录认证后，将认证帐号数据发布出去，让不同的消费者来处理。</li>
+<li>完成某项工作后，通知相关方处理额外处理。</li>
+</ul>
+<h4 id="322-%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF">3.2.2 事件类型及使用场景</h4>
+<ul>
+<li>
+<p>同步事件：也就是侦听器会立即执行（与事件发布处于同一线程），在所有侦听器完成后，才会继承执行下去。</p>
+<ul>
+<li>使用场景：所发布的事件，希望得到即时的回应（如 返回处理等）</li>
+</ul>
+</li>
+<li>
+<p>异步事件：事件发布后不需要等待，所有侦听者会在一个新任务线程中执行。（不影响事件发布者的后续工作）</p>
+<ul>
+<li>使用场景：所发布的事件，不需要即时回应；又或者侦听者相对独立，与事件发布者的可以并行工作。</li>
+</ul>
+</li>
+</ul>
+<h4 id="323-%E5%90%8C%E6%AD%A5%E4%BA%8B%E4%BB%B6%E7%A4%BA%E4%BE%8B">3.2.3 同步事件示例</h4>
+<ul>
+<li>定义事件对象（Java 对象）</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * Servlet 初始化事件
+ *
+ * <span class="hljs-doctag">@author</span> Jai
+ * <span class="hljs-doctag">@since</span>: v1.0
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServletInitEvent</span> </span>{
+
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ServletConfig servletConfig;
+	
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ServletInitEvent</span><span class="hljs-params">(ServletConfig config)</span></span>{
+		<span class="hljs-keyword">this</span>.servletConfig = config;
+	}
+	
+	<span class="hljs-comment">/**
+	 * 获取 Servlet 配置
+	 *
+	 * <span class="hljs-doctag">@return</span>
+	 */</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> ServletConfig <span class="hljs-title">getServletConfig</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.servletConfig;
+	}
+}
+</div></code></pre>
+<ul>
+<li>定义侦听器（也是 Java 对象）：在方法上加 @Observes 注解</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * 系统模块的初始化与销毁
+ *
+ * <span class="hljs-doctag">@author</span> Jai
+ * <span class="hljs-doctag">@since</span>: v1.0
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SystemModuleInitAndDestroy</span> </span>{
+
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> Logger logger = Logger.getLogger(SystemModuleInitAndDestroy.class);
+	
+	<span class="hljs-comment">/**
+	 * 侦听 ServletInitEvent 事件，进行模块初始化
+	 *
+	 * <span class="hljs-doctag">@param</span> event
+	 */</span>
+	<span class="hljs-meta">@Observes</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">moduleInit</span><span class="hljs-params">(ServletInitEvent event)</span></span>{
+		
+		GlobalConfig.setOpenDirectToJsp(<span class="hljs-keyword">true</span>); <span class="hljs-comment">//直接加载 jsp</span>
+		GlobalConfig.setRemoveSuffix(<span class="hljs-keyword">false</span>);
+		
+        <span class="hljs-comment">//....</span>
+	}
+    <span class="hljs-comment">//...</span>
+}
+</div></code></pre>
+<ul>
+<li>事件发布（在需要的位置发布）：EventBusServiceFactory.post(event)</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServletDispatcher</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span></span>{
+
+	<span class="hljs-comment">/**
+	 * 初始化
+	 *
+	 * <span class="hljs-doctag">@param</span> config
+	 */</span>
+	<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">servletInit</span><span class="hljs-params">(ServletConfig config)</span></span>{
+		<span class="hljs-keyword">if</span>(!init){
+			init = <span class="hljs-keyword">true</span>;
+			logger.info(<span class="hljs-string">"[MWF]==&gt; Servlet Init..."</span>);
+			initGlobalConfig(config);
+			dispatchManager = <span class="hljs-keyword">new</span> DispatchManager(config.getServletContext());
+			
+			<span class="hljs-comment">//执行框架使用者的初始化动作</span>
+			EventBusServiceFactory.post(<span class="hljs-keyword">new</span> ServletInitEvent(config));
+		}
+	}
+    <span class="hljs-comment">//...</span>
+}
+</div></code></pre>
+<h4 id="324-%E5%BC%82%E6%AD%A5%E4%BA%8B%E4%BB%B6%E7%A4%BA%E4%BE%8B">3.2.4 异步事件示例</h4>
+<ul>
+<li>定义事件对象（ Java 对象）</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * Radius 认证通过事件对象
+ *
+ * <span class="hljs-doctag">@author</span> Jai
+ * <span class="hljs-doctag">@since</span>: v1.0
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AccountAcceptEvent</span> </span>{
+	
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> AuthVerifyContext context;
+
+	<span class="hljs-comment">/**
+	 * <span class="hljs-doctag">@param</span> context
+	 */</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AccountAcceptEvent</span><span class="hljs-params">(AuthVerifyContext context)</span> </span>{
+		<span class="hljs-keyword">this</span>.context = context;
+	}
+	
+	
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> AuthVerifyContext <span class="hljs-title">getContext</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.context;
+	}
+
+}
+</div></code></pre>
+<ul>
+<li>定义事件侦听器（也是 Java 对象）：在方法上加 @Observes 注解</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * AccountAcceptEvent 事件侦听，将记录保存到数据库
+ *
+ * <span class="hljs-doctag">@author</span> Jai
+ * <span class="hljs-doctag">@since</span>: v1.0
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DefaultAccountAcceptEventListener</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseAuthEventListener</span></span>{
+
+	<span class="hljs-meta">@Observes</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">handler</span><span class="hljs-params">(AccountAcceptEvent event)</span></span>{
+		saveSessionToDb(RadiusSessionStatus.AUTH_ACCEPTED, event.getContext());
+	}
+}
+</div></code></pre>
+<ul>
+<li>事件发布（在需要的位置发布）：EventBusServiceFactory.asyncPost(event)</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * 核心服务器
+ *
+ * <span class="hljs-doctag">@author</span> Jai
+ * <span class="hljs-doctag">@since</span>: v1.0
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MidasRadiusServer</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">RadiusServer</span></span>{
+
+	<span class="hljs-function"><span class="hljs-keyword">public</span> RadiusPacket <span class="hljs-title">accessRequestReceived</span><span class="hljs-params">(AccessRequest accessRequest, InetSocketAddress client)</span> <span class="hljs-keyword">throws</span> RadiusException </span>{
+		AuthVerifyContext context = <span class="hljs-keyword">new</span> AuthVerifyContext(accessRequest, client);
+		<span class="hljs-keyword">int</span> type = RadiusPacket.ACCESS_REJECT;
+
+		<span class="hljs-keyword">if</span> (RadiusPacketHandlerFactory.verifyPassword(context)){ <span class="hljs-comment">//检验帐号与密码成功</span>
+			type = RadiusPacket.ACCESS_ACCEPT;
+			
+            <span class="hljs-comment">//通过异步方式发布 AccountAcceptEvent 事件</span>
+			EventBusServiceFactory.asyncPost(<span class="hljs-keyword">new</span> AccountAcceptEvent(context));
+        }
+        <span class="hljs-comment">//... 后面处理</span>
+    }    
+}
+</div></code></pre>
+<h2 id="4-macroview-web-framework-web-%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86">4. Macroview-Web-Framework Web 响应处理</h2>
+<p>Macroview-Web-Framework 是一个 web 框架。</p>
+<h3 id="41-%E4%BD%BF%E7%94%A8-java-%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%86%8C-action">4.1 使用 Java 代码注册 Action</h3>
+<p>使用注解来定义 <code>path-&gt;Action</code>是在代码编写阶段就固定下来，这符合大多数场景的使用（毕竟路由在系统设计的时候，就已经确定下来）。</p>
+<p>但在一些较为特殊的场景下，例如希望使用外部配置来定义映射，此时使用注解是无法满足需求，但我们可以使用代码来动态注册映射。</p>
+<ul>
+<li>
+<p><strong>使用<code>ActionRegisterFactory</code>类来动态注册映射</strong></p>
+<ul>
+<li>
+<p>ActionRegisterFactory 分别提供了 <code>get</code>、<code>post</code>、<code>put</code>、<code>delete</code> 两种类型注册方法</p>
+</li>
+<li>
+<p>ActionRegisterFactory 所注册的 Action 类，目前只支持实现如下接口：</p>
+<ul>
+<li>
+<p>BaseAction：execute(HttpServletRequest request, HttpServletResponse response) 原始的 Servlet 操作方式</p>
+</li>
+<li>
+<p>IndexAction：R execute(); 带一个返回值，但没有输入参数</p>
+<ul>
+<li>返回 ModelAndView 和 String 将根据内容处理，返回其他值则作为返回 json 处理。</li>
+</ul>
+</li>
+<li>
+<p>Action：R execute(E data); 带一个参数，同时也有返回值，传入参数可以是：</p>
+<ul>
+<li>Pojo、基本类型包装类、请求路径参数、Map</li>
+<li>ServletData 接口（接口包含了获取 HttpServletRequest、HttpServletResponse 方法）</li>
+<li>单个 HttpServletRequest、HttpServletResponse、InputStream、OutputStream、Reader、Writer</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>下面的示例来自 MIDAS 的自定义流程</p>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment"># MIDAS 外部配置文件内容</span>
+
+<span class="hljs-attr">globalConfig:</span>                                 <span class="hljs-comment"># 全局性配置或参数</span>
+<span class="hljs-attr">    wifiDeviceCache:</span> <span class="hljs-literal">false</span>                    <span class="hljs-comment"># onlineWifiDevice 不使用缓存</span>
+<span class="hljs-attr">    authenType:</span> <span class="hljs-string">Sms</span>                           <span class="hljs-comment"># 短信认证</span>
+
+<span class="hljs-attr">authenFlows:</span>                                  <span class="hljs-comment"># 认证流程定义</span>
+<span class="hljs-attr">    authenPolicy:</span>                             <span class="hljs-comment"># 整体认证策略</span>
+<span class="hljs-attr">        policy:</span> <span class="hljs-string">Passthrough</span>
+<span class="hljs-attr">        fail:</span> <span class="hljs-string">wifiauthen/error.jsp</span>
+ 
+<span class="hljs-attr">    defaultRequest:</span>                                           <span class="hljs-comment"># WLC 跳转请求</span>
+<span class="hljs-attr">        action:</span>
+<span class="hljs-attr">            path:</span> <span class="hljs-string">Get</span> <span class="hljs-string">/authen/index</span>                           <span class="hljs-comment"># 默认为 Get，仅支持 Get, Post 两种</span>
+            
+<span class="hljs-attr">        workflow:</span>
+<span class="hljs-attr">            - InlinePredicateProcessor:</span>                     <span class="hljs-comment"># 如果满足重连条件，则直接放行</span>
+<span class="hljs-attr">                if:</span> <span class="hljs-string">not</span> <span class="hljs-string">FalsePredicate</span>                     
+<span class="hljs-attr">                do:</span> <span class="hljs-string">ForTestProcessor</span>
+</div></code></pre>
+<p>这是一个简单的认证流程，在流程配置当中，<code>path: Get /authen/index</code> 就是一个请求路径，当系统接收到 <code>Get /authen/index</code>请求后，就是执行下面的 <code>workflow</code>流程。</p>
+<p>由于请求是外部配置，并且也是在启动后才知，所以使用代码来注册能满足这种场景需要：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * 对流程配置进行预处理，使得配置内容更符合使用要求，并顺利进行一些简单的语法校验
+ * 
+ * 并将 midas.yaml 中自定义的请求注册到 MWF
+ *
+ * <span class="hljs-doctag">@author</span> Jai
+ * <span class="hljs-doctag">@since</span>: v1.0
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FlowConfigPretreatmentHelper</span> </span>{
+
+    <span class="hljs-comment">//...</span>
+
+	<span class="hljs-comment">/**
+	 * 将 http 请求路径与处理方法注册到 MWF，目前仅支持 Get, Post 两个形式请求。
+	 * 
+	 * 并且 action 也仅支持 实现接口 Action&lt;E, R&gt; 的类
+	 */</span>
+	<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doRegistryHttpRequest</span><span class="hljs-params">(AuthenRequestConfig config)</span> <span class="hljs-keyword">throws</span> Exception</span>{
+		RequestActionConfig action = config.getAction();
+		<span class="hljs-keyword">if</span>(action != <span class="hljs-keyword">null</span> &amp;&amp; action.isNotEmpty()){
+			
+			Action o = getWorkflowAction().registryRequestPath(config);
+			<span class="hljs-keyword">switch</span>(action.getRequest()){
+				<span class="hljs-keyword">case</span> GET:
+					ActionRegisterFactory.get(action.getPath(), o);
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> POST:
+					ActionRegisterFactory.post(action.getPath(), o);
+					<span class="hljs-keyword">break</span>;
+			}
+		}
+	}
+}
+</div></code></pre>
+<p>在代码中，使用 <code>ActionRegisterFactory.get()</code> 和 <code>ActionRegisterFactory.post()</code> 来注册请求处理。</p>
+<h2 id="5-macroview-db-%E6%95%B0%E6%8D%AE%E5%AD%98%E5%8F%96">5. Macroview-DB 数据存取</h2>
+<h3 id="51-%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2">5.1 数据查询</h3>
+<p>为了方便使用，MD 引入一套查询注解，通过注解来定义查询内容，方便优雅的同时，也避免了字符串拼接带来的问题。</p>
+<p>一般情况下，建议尽量使用查询注解来建立查询语句。</p>
+<p>当然，查询注解也有其缺点：</p>
+<ul>
+<li><strong>查询注解是一种联合查询（即 And 的关系），而不是 (Or 的关系)，要创建 Or 查询就无法使得注解。</strong></li>
+</ul>
+<h4 id="511-%E5%B8%B8%E7%94%A8%E7%9A%84%E6%9F%A5%E8%AF%A2%E6%B3%A8%E8%A7%A3">5.1.1 常用的查询注解</h4>
+<ul>
+<li>Equals：相等</li>
+<li>Like：like 操作</li>
+<li>In：in 操作</li>
+<li>Between: between 操作</li>
+<li>Max：小于或等于</li>
+<li>Min：大于或等于</li>
+<li>CustomConditions：自定义查询语句</li>
+<li>OrderBy：排序</li>
+<li>NotEquals：不等于</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * 查询 WifiDeviceLog 的Bean
+ *
+ * <span class="hljs-doctag">@author</span> Jai
+ * <span class="hljs-doctag">@since</span>: v1.0
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WifiDeviceLogQueryBean</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">DefaultPageBean</span></span>{
+
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> Logger logger = Logger.getLogger(WifiDeviceLogQueryBean.class);
+	
+	<span class="hljs-comment">/**
+	 * 如果是手机就是手机号码，如果不是；就是设备的逻辑编号，例如微信号，员工编号等
+     * 相当于： like %authenNumber%
+	 */</span>
+	<span class="hljs-meta">@Like</span>
+	<span class="hljs-keyword">private</span> String authenNumber;
+	
+	<span class="hljs-comment">/**
+	 * 设备的 mac 地址
+	 */</span>
+	<span class="hljs-meta">@Like</span>
+	<span class="hljs-keyword">private</span> String deviceMac;
+	
+	<span class="hljs-meta">@Like</span>
+	<span class="hljs-keyword">private</span> String apMac;
+
+	<span class="hljs-comment">/**
+	 * 设备的认证方式
+     * 相当于  authenType = :authenType
+	 */</span>	
+	<span class="hljs-keyword">private</span> String authenType;
+	
+	<span class="hljs-comment">/**
+	 * 登录时间范围
+     * 相当于 Between begintTime And endTime
+	 */</span>
+	<span class="hljs-meta">@Between</span>
+	<span class="hljs-keyword">private</span> DateTimeRange signIn;
+
+	<span class="hljs-comment">/**
+	 * 用来构建 signIn 时间范围
+     * 不用于查询
+	 */</span>
+	<span class="hljs-meta">@NotNamed</span>
+	<span class="hljs-keyword">private</span> String signInRange;
+	
+	<span class="hljs-comment">/**
+	 * 退出时间范围
+	 */</span>
+	<span class="hljs-meta">@Between</span>
+	<span class="hljs-keyword">private</span> DateTimeRange signOut;
+	
+	<span class="hljs-comment">/**
+	 * 用来构建退出时间范围
+	 */</span>
+	<span class="hljs-meta">@NotNamed</span>
+	<span class="hljs-keyword">private</span> String signOutRange;
+	
+	<span class="hljs-comment">/**
+	 * 设备类型
+	 */</span>
+	<span class="hljs-keyword">private</span> String deviceType;
+
+    <span class="hljs-comment">//...</span>
+}
+</div></code></pre>
+<p>上面查询类，如果所有字段有值的话，就可以生成下面的查询语句：</p>
+<pre><code> (authenNumber like %authenNumber%) AND (deviceMac like %deviceMac%) AND (apMac like %apMac%)
+ AND (authenType=:authenType) AND (signIn Between :beginTime And :endTime)
+ AND (signOut Between :beginTime And :endTime) AND (deviceType = :deviceType)
+</code></pre>
+<h4 id="512-v280-%E5%BC%95%E5%85%A5%E7%9A%84%E6%96%B0%E6%9F%A5%E8%AF%A2%E5%8A%9F%E8%83%BD">5.1.2 v2.8.0 引入的新查询功能</h4>
+<p>在 <code>2.8.0</code> 当中，查询注解引入一个叫 'name' 的属性，可以用来定义查询字段名称。一般而言，查询类的属性名称将对应查询字段名称，例如表 <code>User</code> 有一个字段 <code>name</code>，那么查询类也就顺理成章地定义属性 <code>name</code> 来匹配。但在情况下，例如：</p>
+<ul>
+<li>数据表字段名比较特殊（例如汉字命名，不符合 Java 属性命名规则的名称等）</li>
+<li>多变的字段名</li>
+</ul>
+<p>此时，现有的注解就无法支持，因此在 <code>2.8.0</code> 中，每个查询注解都增加了一个 <code>name</code> 属性，这个属性在默认情况下为空串（即使用查询类属性名作为字段名进行查询），如果字段名不符合Java的命名习惯时，就可以显式使用这个属性来定义查询字段名称。</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserQueryBean</span> </span>{
+
+    <span class="hljs-comment">/**
+     * 按照标准的数据库字段定义，fk 前缀表示外键
+     * 这里使用 name 来表示对应的查询字段名称
+     */</span>
+    <span class="hljs-meta">@Equals</span>(name=<span class="hljs-string">"fkDepartment"</span>)
+    <span class="hljs-keyword">private</span> Long department;
+
+    <span class="hljs-comment">//...</span>
+}
+</div></code></pre>
+<p>当 <code>department=1</code>时，查询条件就变成：<code>fkDepartment=1</code>。</p>
+<p>对于希望字段名称由前端回传，而不是在查询类写死，同样也可以使用 <code>name</code> 属性来定义，此时的<code>name</code>定义格式为：<code>$属性名</code>，表示查询字段名称由属性来（动态）提供，下面示例：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeviceQueryBean</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">DefaultPageBean</span></span>{
+
+	<span class="hljs-comment">/**
+	 * 查询类型
+	 */</span>
+	<span class="hljs-meta">@NotNamed</span>
+    <span class="hljs-keyword">private</span> String queryType;
+
+    <span class="hljs-comment">/**
+     * 查询值， name="$queryType" 表示，查询字段名称由属性 queryType 提供
+     */</span>
+	<span class="hljs-meta">@Like</span>(name=<span class="hljs-string">"$queryType"</span>)
+    <span class="hljs-keyword">private</span> String queryValue;
+
+    <span class="hljs-meta">@Enumerated</span>(EnumType.STRING)
+    <span class="hljs-keyword">private</span> CmDevRegStat status;
+
+    <span class="hljs-comment">/**
+     * 定义排序字段，并且字段名称由 orderBy 的值提供（而不是 orderBy 这个名称）
+     */</span>
+    <span class="hljs-meta">@OrderBy</span>(byFieldValue=<span class="hljs-keyword">true</span>)
+    <span class="hljs-meta">@NotNamed</span>
+    <span class="hljs-keyword">private</span> String orderBy;
+
+    <span class="hljs-comment">//...</span>
+}
+</div></code></pre>
+<p>于是 <code>queryType=&quot;name&quot;</code>，<code>queryValue=&quot;Jai&quot;</code>时，查询条件就变成：<code>name=&quot;Jai&quot;</code>，同理 <code>queryType=&quot;department&quot;、queryValue=&quot;软件部&quot;</code>时，查询条件就变成：<code>department=&quot;软件部&quot;</code>，这样提供一个灵活的查询操作。</p>
+<h3 id="52-%E5%BA%94%E7%94%A8%E5%A4%8D%E6%9D%82%E7%9A%84%E6%9F%A5%E8%AF%A2">5.2 应用复杂的查询</h3>
+<p>由于需求原因，<code>MD</code>并没有实现 <code>JPA</code> 的 <code>OneToOne</code>、<code>OneToMany</code>等，关于多表关联的操作，所以当需要用到多表关联时，我们就需要回到 <code>SQL</code>拼接这种<code>较为原始</code>的手法。</p>
+<p>那么，除了拼接之外，还有没有更好的方法呢？。。下面提供两个建议：</p>
+<h4 id="521-%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE">5.2.1 使用视图</h4>
+<p>大多数数据库都提供创建视图的功能，并且还会对视图进行优化，所以将复杂的查询语句预定义为视图，不失为一个非常好的选择。</p>
+<p>所以对于固定的多表关联，可以定义为数据视图，然后再进行查询。</p>
+<h4 id="522-%E4%BD%BF%E7%94%A8%E5%A4%96%E7%BD%AE-sql-%E8%AF%AD%E5%8F%A5">5.2.2 使用外置 SQL 语句</h4>
+<p>MD 本身支持 <code>SQL</code> 语句外置，将语句外置带来的好处就是维护方便，并且在需要时，还可以动态修改和更新。</p>
+<ul>
+<li>第一步，就是编写 <code>JSON</code> 格式的外置语句，下面是示例：</li>
+</ul>
+<pre class="hljs"><code><div>{
+	id: <span class="hljs-string">"acl"</span>,   /* id 是一个唯一标识，需要用到*/
+	
+	maps:{  /* 内容为：查询名 为 Key，查询语句为值，组成 JSON 的键值  */
+		queryAcl: <span class="hljs-string">"Select a.*, count(r.id) AS ruleCount From WlcAclTable a left Join WlcAclRecord r On a.id=r.aclId Group By a.name Order By a.id"</span>,
+		queryAclRulesById: <span class="hljs-string">"Select r.id, r.ruleIndex, r.action, r.direction, concat(r.sourceIpAddress, '/', r.sourceIpNetmask) As sourceIp, concat(r.destinationIpAddress, '/', r.destination) As destIp, r.protocol, r.startSourcePort, r.endSourcePort, r.startDestinationPort, r.endDestinationPort, r.dscp, r.direction From wlcaclrecord r Join wlcacltable a On r.aclName=a.name Where a.id=? Order By r.ruleIndex"</span>
+	}
+}
+</div></code></pre>
+<pre class="hljs"><code><div>{
+	id: <span class="hljs-string">"issue"</span>,
+	
+	maps:{
+		totalComplete: <span class="hljs-string">"Select count(*) As total From ${Table} Where (STATUS='关闭' or STATUS='已经解决') ${condition}"</span>	
+	}
+}
+</div></code></pre>
+<p><code>${Table}</code>为内置表明，而 <code>${condition}</code> 为外部给出的条件语句。。。。语句可以使用格式为:<code>${名称}</code>的占位符，占位符的内容由外部提供。</p>
+<p><code>id</code>为外置SQL的唯一标识，在代码要用到，而具体的语句放在 <code>maps</code>当中，每一个<code>map</code>为一条 <code>SQL</code>语句，每条<code>SQL</code>语句都由一个名称和内容组成。</p>
+<ul>
+<li>第二步，将外置 SQL 引入到代码。（与实体类关联起来）</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ *  使用 <span class="hljs-doctag">@SqlMapResource</span> 注解，将外置 sql 文件关联到实体类
+ */</span>
+<span class="hljs-meta">@Entity</span>
+<span class="hljs-meta">@Table</span>
+<span class="hljs-meta">@SqlMapResource</span>(resource=<span class="hljs-string">"package:acl.json"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WlcAclTable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HasCreateTimeEntity</span></span>{
+
+    <span class="hljs-comment">//...</span>
+}
+</div></code></pre>
+<p><code>@SqlMapResource</code> 注解将sql文件与实体类关联起来，文件路径支持格式：</p>
+<pre><code> **package:acl.json**：表示 `acl.json` 文件与实体类（WlcAclTable）在同一个包路径下
+
+ **classpath:acl.json**：表示 `acl.json` 在目录 `WEB-INF/classes` 下
+</code></pre>
+<ul>
+<li>
+<p>第三步，使用查询语句（实体类基类提供读取语句方法）</p>
+<ul>
+<li>
+<p>List<T> queryForSqlMapTo(Class<T> toEntityClass, String sqlMapName, Object...objects)</p>
+<p>执行（不含占位符）查询语句，并映射到实体类 <code>toEntityClass</code></p>
+</li>
+<li>
+<p>List<T> queryBySqlMapWithParams(Class&lt;?&gt; entityClass, String sqlMapName, Map&lt;String, String&gt; params, Object...objects)</p>
+<p>执行包含了占位符的查询语句，并映射到实体类 <code>entityClass</code></p>
+</li>
+<li>
+<p>List<T> findBySqlMapWithParams(String sqlMapName, Map&lt;String, String&gt; params, Object[] objects)</p>
+<p>执行包含了占位符的查询语句，并映射到自身</p>
+</li>
+<li>
+<p>String getSqlFromSqlMap(String sqlMapName) 通过名称来得到 sql 语句</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>要留意，上述的方法，都是 <code>protected</code>（类及其子类才能使用）方法。</p>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ *  使用 <span class="hljs-doctag">@SqlMapResource</span> 注解，将外置 sql 文件关联到实体类
+ */</span>
+<span class="hljs-meta">@Entity</span>
+<span class="hljs-meta">@Table</span>
+<span class="hljs-meta">@SqlMapResource</span>(resource=<span class="hljs-string">"package:acl.json"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WlcAclTable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HasCreateTimeEntity</span></span>{
+
+    <span class="hljs-comment">//...</span>
+
+	<span class="hljs-comment">/**
+	 * 使用外部sql语句（queryAcl）来查询所有 ACL
+	 *
+	 * <span class="hljs-doctag">@param</span> clazz
+	 * <span class="hljs-doctag">@return</span>
+	 * <span class="hljs-doctag">@throws</span> Exception
+	 */</span>
+	<span class="hljs-keyword">public</span> &lt;T&gt; <span class="hljs-function">List&lt;T&gt; <span class="hljs-title">findAllAcls</span><span class="hljs-params">(Class&lt;T&gt; clazz)</span> <span class="hljs-keyword">throws</span> Exception</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.queryForSqlMapTo(clazz, <span class="hljs-string">"queryAcl"</span>, <span class="hljs-keyword">new</span> Object[<span class="hljs-number">0</span>]);
+	}
+
+    <span class="hljs-comment">//...</span>
+}
+</div></code></pre>
+
+</body>
+</html>

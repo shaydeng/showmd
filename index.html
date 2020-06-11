@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+    <meta name="description" content="Macroview Doc">
+    <meta name="google-site-verification">
+    <title>开发部门文档</title>
+    <link rel="stylesheet" href="docs/assets/css/theme-simple.css" title="Simple">
+    <link rel="stylesheet" href="docs/assets/css/main.css">
+
+    <style type="text/css">
+        .sidebar-nav ul>li>strong {
+            color: darkgreen;
+            font-weight: 700;
+            font-size: 14px;
+        }    
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <!-- JavaScript -->
+    <script>
+        var year = new Date().getFullYear();
+        // Docsify
+        window.$docsify = {
+            // GENERAL
+            // -----------------------------------------------------------------
+            name       : 'Macroview Docs',
+            loadSidebar: 'sidebar.md',
+            loadNavbar: 'navbar.md',
+
+            // NAVIGATION
+            // -----------------------------------------------------------------
+            auto2top   : true,
+            maxLevel   : 4,
+            subMaxLevel: 3,
+            alias:{
+                '/.*/sidebar.md': '/sidebar.md',
+                '/.*/navbar.md': '/navbar.md'
+            },
+            // PLUGINS
+            // -----------------------------------------------------------------
+            executeScript: true,
+            ga    : 'UA-100100910-4',
+            search: {
+                depth      : 3,
+                noData     : 'No results!',
+                placeholder: 'Search...'
+            },
+            tabs: {
+                // persist    : false,
+                // sync       : false,
+                // theme      : 'material',
+                // tabComments: false,
+                // tabHeadings: false
+            },
+            "flexible-alerts": {
+                    style: 'flat',
+                    comment: {  // 自定义标签
+                        label: "注释",
+                        icon: "fas fa-comment",
+                        className: "info"
+                    }
+            },            
+            plugins:[
+                function (hook) {
+                  var footer = [
+                    '<hr/>',
+                    '<footer>',
+                    '<span>Copyright © ' + year,
+                    ' <a href="https://www.macroview.com" target="_blank">Macroview</a>. All rights reserved.',
+                    '</footer>'
+                  ].join('')
+
+                  hook.afterEach(function (html) {
+                    return html + footer
+                  })
+                }
+                
+            ]            
+        };
+    </script>
+    <script src="docs/assets/js/docsify.min.js"></script>
+    <script src="docs/assets/js/docsify-themeable.min.0.8.0.js"></script>
+    <script src="docs/assets/js/docsify-copy-code.min.2.1.0.js"></script>
+    <script src="docs/assets/js/docsify-tabs.min.1.2.0.js"></script>
+    <script src="docs/assets/js/external-script.min.js"></script>
+    <script src="docs/assets/js/search.js"></script>
+    <script src="docs/assets/js/class-change.min.1.1.6.js"></script>
+    <script src="docs/assets/js/prism-python_1.19.0.js"></script>
+    <script src="docs/assets/js/prism-java_1.19.0.js"></script>
+    <script src="docs/assets/js/prism-json_1.19.0.js"></script>
+    <script src="docs/assets/js/prism-javascript_1.19.0.js"></script>
+    <script src="docs/assets/js/prism-yaml_1.19.0.js"></script>
+    <script src="docs/assets/js/prism-bash_1.19.0.js"></script>
+    <script src="docs/assets/js/prism-go_1.19.0.js"></script>
+    <script src="docs/assets/js/prism-ini_1.19.0.js"></script>
+    <script src="docs/assets/js/prism-sql_1.19.0.js"></script>
+    <script src="docs/assets/js/docsify-plugin-flexible-alerts.min.js"></script>
+    <script>
+        // Initialize the default attribute listener
+        classChange.attrs();
+    </script>
+</body>
+</html>
