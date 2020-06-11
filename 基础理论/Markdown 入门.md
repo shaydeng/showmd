@@ -182,11 +182,11 @@ ___
               
        使用 id 引用图片： ![图片][pic1]
  
-       [pic1]: pic2.png
+       [pic1]: ./images/pic2.png
 
 　　   **示例：**
 
-　　    直接显示图片：![图片](pic.png)
+　　    直接显示图片：![图片](./images/pic.png)
 
 
 
@@ -206,9 +206,9 @@ ___
 
        [1]: http://www.baidu.com "百度搜索"
 
-       [Macroview]: htt://www.macroview.com "我们公司"
+       [xxxx]: http://www.xxxx.com "我们公司"
 
-	> 我们在使用上面的链接时，这样用。请 [百度](1) 搜索 [我们的公司][Macroview]。
+	> 我们在使用上面的链接时，这样用。请 [百度](1) 搜索 [我们的公司][xxxx]。
 
    + 文档内部的跳转。使用 HTML 的 a 标签，我们可以做文档内部的跳转。
 
@@ -429,9 +429,9 @@ ___
 
        [1]: http://www.baidu.com "百度搜索"
 
-       [Macroview]: htt://www.macroview.com "我们公司"
+       [xxxx]: htt://www.xxxx.com "我们公司"
 
-	> 我们在使用上面的链接时，这样用。请 [百度](1) 搜索 [我们的公司][Macroview]。
+	> 我们在使用上面的链接时，这样用。请 [百度](1) 搜索 [我们的公司][xxxx]。
 
    + 文档内部的跳转。使用 HTML 的 a 标签，我们可以做文档内部的跳转。
 
